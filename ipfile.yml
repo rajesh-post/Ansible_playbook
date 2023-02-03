@@ -1,0 +1,9 @@
+---
+- name: play1
+  hosts: all_server
+  tasks:
+  - name: getting the ip of all servers
+    command: ip a
+    register: command_out
+  - debug:
+      var=command_out.stdout_line 
