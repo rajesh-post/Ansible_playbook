@@ -2,7 +2,7 @@
 - name: play2
   hosts: web_server
   vars:
-     start_httpd: no
+     start_httpd: stopped
   tasks:
      - name: starting the httpd with var & con
        yum:
@@ -12,20 +12,19 @@
      - name : stopping the httpd
        service: 
           name : httpd
-          state: stopped
-       when: start_httpd
+          state: "{{start_httpd}}"
 
-     - debug:
-         var: system_out.stdout_lines
+          #     - debug:
+          #         var: system_out.stdout_lines
 
-     - name : starting the httpd
-       service:
-          name : httpd
-          state: started
-       when: start_httpd
+         #     - name : starting the httpd
+         #service:
+         # name : httpd
+         # state: started
+         # when: start_httpd
 
      - command: systemctl status httpd
        register: system_out
 
      - debug:
-         var: system_out.stdout_lines
+          var: system_out.stdout_lines
